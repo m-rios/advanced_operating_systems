@@ -1,1 +1,5 @@
-char ReadCharacter (int fd, int position);
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <unistd.h>
+
+char readCharacter (int fd, int position);
