@@ -16,3 +16,10 @@
 *.exe
 *.out
 *.app
+
+# Others
+*.sublime-build
+*.sublime-project
+*.sublime-workspace
+test
+count
