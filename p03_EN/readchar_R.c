@@ -1,3 +1,4 @@
+#include "readchar_R.h"
 char readCharacter (int _fd, int _position)
 {
 	/*returns without using memory mapping the character stored in the

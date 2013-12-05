@@ -6,16 +6,16 @@
 #include <sys/uio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "readchar_R.h"
 
 int main()
 {
 	char* _exit;
 	char* cinbuffer;
 	int _fd = open("testfile",O_RDWR);
-	int _sizeFile = read(_fd,&cinbuffer,5);
-	int _bytesW = write(_fd,&cinbuffer,sizeof(cinbuffer));
-	printf("%d\n",_sizeFile );
-	printf("%s\n", cinbuffer);
-	scanf("%s",_exit);
+	char _test = readCharacter(_fd,15);
+	printf("%c\n",_test );
+
+
 	return 0;
 }
