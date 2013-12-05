@@ -7,15 +7,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include "readchar_R.h"
+#include "count_M.h"
 
 int main()
 {
 	char* _exit;
 	char* cinbuffer;
 	int _fd = open("testfile",O_RDWR);
-	char _test = readCharacter(_fd,15);
-	printf("%c\n",_test );
-
-
+	int _nChar = countCharacters(_fd,'a');
+	printf("%d\n",_nChar);
 	return 0;
 }
