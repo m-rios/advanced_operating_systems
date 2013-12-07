@@ -9,3 +9,14 @@ commands.o: commands.c
 
 parser.o: parser.c
 	gcc -c -Wall parser.c -o parser.o
+
+test.o: test.c
+	gcc -c -Wall test.c -o test.o
+
+test: test.c commands.o
+	gcc -Wall test.c commands.o -o test
+
+clean:
+	rm -f *.o
+	rm -f uShell
+	rm -f test
