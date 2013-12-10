@@ -7,6 +7,12 @@
 
 int main(int argc, char const *argv[])
 {
+	if (argc != 4)
+	{
+		printf("incorrect number of parameters\n");
+		return 0;
+	}
+
 	if (strlen(argv[3]) != 1)
 	{
 		printf("invalid parameter <%s>, must be a char\n",argv[3]);
@@ -44,6 +50,9 @@ int main(int argc, char const *argv[])
 	}
 
 	printf("%d\n",_nChar);
+
+	if (close(_fd)!=0)
+		perror("Problem closing file");
 
 	return 0;
 }
