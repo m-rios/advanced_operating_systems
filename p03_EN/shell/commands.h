@@ -2,9 +2,15 @@
 #define _COMMANDS_H
 
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <dirent.h>
+#include <stdio.h>
+#include <string.h>
 
-char* mypwd();
-char* myls(char* dir,char arg);
+
+void mypwd(char* path);
+char* myls(char* dir,char* arg);
 void mymkdir(char* dir);
 void myrmdir(char* dir);
 void mycd(char* path);
