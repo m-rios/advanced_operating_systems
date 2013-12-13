@@ -60,13 +60,28 @@ void mycd(char* path)
 	if (chdir(path))
 		perror(path);
 }
-char* mycat(char* dir)
+char* mycat(char* _path)
 {
+	//open file
+	int _fd = open(_path,O_RDONLY);
+	if (_fd == -1)
+		perror(_path);
 
+	//size of the file to read
+	char* _file = "";
+	int _fileSize = lseek(_fd,0,SEEK_END);
+	if (_fileSize != 0)
+		_file = (char*) mmap(NULL,_fileSize,PROT_READ,MAP_PRIVATE,_fd,0);
+
+	if (close(_fd)!=0)
+		perror("Problem closing file");
+
+	return _file;
 }
 void mycp(char* source, char* origin)
 {
-
+	//create new file
+	
 }
 void myrm(char* file)
 {

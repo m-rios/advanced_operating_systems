@@ -7,6 +7,8 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
+#include <fcntl.h>
+#include <sys/mman.h>
 
 
 void mypwd(char* path);
@@ -14,7 +16,7 @@ char* myls(char* dir,char* arg);
 void mymkdir(char* dir);
 void myrmdir(char* dir);
 void mycd(char* path);
-char* mycat(char* dir);
+char* mycat(char* _path);
 void mycp(char* source, char* origin);
 void myrm(char* file);
 void exit(); //maybe a function is not needed
