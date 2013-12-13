@@ -35,7 +35,9 @@ int main(int argc, char const *argv[])
 	//parse mode
 	if (strcmp(argv[1],"R") == 0) // call to readchar in a loop
 	{
-		for (int i = 0; i < 512; ++i)
+		int i;
+		int _fileSize = lseek(_fd,0,SEEK_END);
+		for (i=0; i < _fileSize; ++i)
 		{
 			if (readCharacter(_fd,i) == _input)
 				_nChar++;
