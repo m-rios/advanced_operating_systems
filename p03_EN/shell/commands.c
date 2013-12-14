@@ -89,12 +89,13 @@ void mycp(char* _source, char* _dest)
 	}
 	//open source file & get cntent
 	int _sFd = open(_source,O_RDONLY);
-	int _sSize = lseek(_sFd,0,SEEK_END);
-	char* _content;
-	read(_sFd,&_content,_sSize);
-	printf("%s\n", _content);
+	off_t _sSize = lseek(_sFd,0,SEEK_END);
+	lseek(_sFd,0,SEEK_SET); //return pointer to beginning
+	char* _content= (char*) malloc(_sSize);
+	read(_sFd,_content,_sSize);
 	//write on destination & close files
-	write(_dFd,&_content,_sSize);
+	write(_dFd,_content,_sSize);
+	free(_content);
 	if (close(_sFd) != 0)
 		perror(_source);
 	if (close(_dFd) != 0)

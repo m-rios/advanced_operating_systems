@@ -9,6 +9,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <sys/mman.h>
+#include <stdlib.h>
 
 
 void mypwd(char* path);

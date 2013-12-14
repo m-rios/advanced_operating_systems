@@ -4,7 +4,7 @@ uShell: main.o commands.o parser.o
 main.o: main.c
 	gcc -c -Wall main.c -o main.o
 
-commands.o: commands.c
+commands.o: commands.c commands.h
 	gcc -c -Wall commands.c -o commands.o
 
 parser.o: parser.c
