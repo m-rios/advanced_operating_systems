@@ -4,13 +4,17 @@
 
 int main(int argc, char const *argv[])
 {
-	//mycat test
+/*	//mycat test
 	char* _content = mycat("testFile");
 	if (_content == '\0')
 	{
 		printf("NULL2\n");
 	}
 	printf("%s\n", _content);
+*/
+	//mycp test
+	mycp("pene","rabo");
+
 	//myls test
 	/*char* ls = myls(".",NULL);
 	printf("%s\n",ls);

@@ -17,7 +17,7 @@ void mymkdir(char* dir);
 void myrmdir(char* dir);
 void mycd(char* path);
 char* mycat(char* _path);
-void mycp(char* source, char* origin);
+void mycp(char* source, char* _dest);
 void myrm(char* file);
 void exit(); //maybe a function is not needed
 

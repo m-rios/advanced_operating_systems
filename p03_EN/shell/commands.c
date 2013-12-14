@@ -78,10 +78,27 @@ char* mycat(char* _path)
 
 	return _file;
 }
-void mycp(char* source, char* origin)
+void mycp(char* _source, char* _dest)
 {
 	//create new file
-	
+	int _dFd = open(_dest,O_CREAT|O_WRONLY,0644);
+	if (_dFd == -1)
+	{
+		perror(_dest);
+		return;
+	}
+	//open source file & get cntent
+	int _sFd = open(_source,O_RDONLY);
+	int _sSize = lseek(_sFd,0,SEEK_END);
+	char* _content;
+	read(_sFd,&_content,_sSize);
+	printf("%s\n", _content);
+	//write on destination & close files
+	write(_dFd,&_content,_sSize);
+	if (close(_sFd) != 0)
+		perror(_source);
+	if (close(_dFd) != 0)
+		perror(_dest);
 }
 void myrm(char* file)
 {
