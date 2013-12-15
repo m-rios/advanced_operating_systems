@@ -1,18 +1,21 @@
 #include <stdlib.h>
 #include "parser.h"
 #include "auxFunc.h"
+#include <sys/param.h>
+
 
 int main(int argc, char const *argv[])
 {
 	command C;
 	int r;
 	int _exit;
+	char cwd[MAXPATHLEN];
 
 	do
 	{
 		init_command(&C);
 
-		printPrompt();
+		printPrompt(cwd,sizeof(cwd));
 		r = read_command(&C,stdin);
 
 		if(r < 0)

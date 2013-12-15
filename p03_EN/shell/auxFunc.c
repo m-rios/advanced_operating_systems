@@ -1,9 +1,9 @@
 #include "auxFunc.h"
-#include "parser.h"
 
-void printPrompt()
+void printPrompt(char * cwd, size_t len)
 {
-	printf("Prompt->$ ");
+	getcwd(cwd, len);
+	printf("%s->$ ",cwd);
 }
 
 int callInternal(command* C)
