@@ -1,17 +1,21 @@
 #include "auxFunc.h"
 #include "parser.h"
 
-printPrompt()
+void printPrompt()
 {
-
+	printf("Prompt->$ ");
 }
 
-callInternal(command C)
+int callInternal(command* C)
 {
-	if (strcmp(C->argv[0],"mycat") == 0)
+	if (C->argc == 0)
+		return 0;
+	else if (strcmp(C->argv[0],"exit") == 0)
+		return 1;
+	else if (strcmp(C->argv[0],"mycat") == 0)
 	{
 		if (C->argc == 2)
-			mycat(argv[0]);
+			printf("%s\n",mycat(C->argv[1]));
 		else if (C->argc == 1)
 			printf("Argument missing\n");
 		else if (C->argc > 2)
@@ -20,7 +24,7 @@ callInternal(command C)
 	else if (strcmp(C->argv[0],"mycp") == 0)
 	{
 		if (C->argc == 3)
-			mycp(argv[1],argv[2]);
+			mycp(C->argv[1],C->argv[2]);
 		else if (C->argc == 2)
 			printf("Destination needed\n");
 		else if (C->argc == 1)
@@ -29,5 +33,6 @@ callInternal(command C)
 			printf("Incorrect usage of mycp\n");
 	}
 	else
-		printf("command not found: %s\n",argv[0]);
+		printf("command not found: %s\n",C->argv[0]);
+	return 0;
 }
