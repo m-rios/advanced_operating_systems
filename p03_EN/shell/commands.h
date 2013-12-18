@@ -10,9 +10,11 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <stdlib.h>
+#include <sys/param.h>
 
 
-void mypwd(char* path);
+
+char* mypwd();
 char* myls(char* dir,char* arg);
 void mymkdir(char* dir);
 void myrmdir(char* dir);

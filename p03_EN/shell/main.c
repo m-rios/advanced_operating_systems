@@ -10,6 +10,7 @@ int main(int argc, char const *argv[])
 	int r;
 	int _exit;
 	char cwd[MAXPATHLEN];
+	char* homeDir = //get current directory
 
 	do
 	{

@@ -1,9 +1,10 @@
 #include "commands.h"
 
-void mypwd(char* path)
+char* mypwd()
 {
-	//getcwd(path, sizeof(path));
-	//	perror(path);
+	char* _return = (char*) malloc(MAXPATHLEN);
+	getcwd(_return,MAXPATHLEN);
+	return _return;
 }
 char* myls(char* dir,char* arg)
 {
@@ -103,5 +104,6 @@ void mycp(char* _source, char* _dest)
 }
 void myrm(char* file)
 {
-
+	if (unlink(file) == -1)
+		perror(file);
 }
