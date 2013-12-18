@@ -6,7 +6,7 @@
 #include "commands.h"
 #include <stdlib.h>
 
-void printPrompt(char * cwd, size_t len);
-int callInternal(command * C);
+void printPrompt();
+int callInternal(command * C, char* homeDir);
 
 #endif

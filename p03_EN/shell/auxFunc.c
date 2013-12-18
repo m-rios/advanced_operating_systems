@@ -1,9 +1,10 @@
 #include "auxFunc.h"
 
-void printPrompt(char * cwd, size_t len)
+void printPrompt()
 {
-	getcwd(cwd, len);
-	printf("%s->$ ",cwd);
+	char* _cwd = mypwd();
+	printf("%s->$ ",_cwd);
+	free(_cwd);
 }
 
 int callInternal(command* C, char* homeDir)
@@ -65,8 +66,8 @@ int callInternal(command* C, char* homeDir)
 	{
 		if (C->argc >2)
 			printf("Incorrect usage of mycd\n");
-		else if (C-argc = 2)
-			mycd(argc[1])
+		else if (C->argc == 2)
+			mycd(C->argv[1]);
 		else
 			mycd(homeDir);
 	}

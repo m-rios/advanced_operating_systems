@@ -6,23 +6,29 @@ char* mypwd()
 	getcwd(_return,MAXPATHLEN);
 	return _return;
 }
-char* myls(char* dir,char* arg)
+char* myls(char* dir,int _d_mod)
 {
 	char* _ls = "";
-	char* _wd = NULL;
+	char* _wd;
 	DIR* _dirp;
 	struct dirent* _entry;
 
 	if (dir == NULL)
-	{
-		//_wd = current directory
-	}else
+		_wd = mypwd();
+	else
 		_wd = dir;
 
 	if ((_dirp = opendir(_wd)) == NULL) //something goes wrong
 		perror(_wd);
 
-	if (arg == NULL)
+	if (_d_mod) //detailed mode
+	{
+		while((_entry = readdir(_dirp)) != NULL)
+		{
+			
+		}
+	}
+	else 
 	{
 		while((_entry = readdir(_dirp)) != NULL)
 		{
@@ -32,16 +38,8 @@ char* myls(char* dir,char* arg)
 			}
 		}
 	}
-	else if (strcmp(arg,"-l") == 0) //detailed mode
-	{
-		while((_entry = readdir(_dirp)) != NULL)
-		{
-			//do something
-		}
-	}
-	else
-		printf("Argument unknown: %s\n",arg );
-	
+
+	free(_wd);
 
 	if (closedir(_dirp) != 0) //something goes wrong
 		perror("error when closing directory");
@@ -66,7 +64,16 @@ char* mycat(char* _path)
 	//open file
 	int _fd = open(_path,O_RDONLY);
 	if (_fd == -1)
+	{
 		perror(_path);
+		return "";
+	}
+
+	//test if is a regular file
+	struct stat _sbuff;
+	fstat(_fd,&_sbuff);
+	if (S_ISREG(_sbuff.st_mode)==0)
+		return "error: path is not a file";
 
 	//size of the file to read
 	char* _file = "";
@@ -88,6 +95,15 @@ void mycp(char* _source, char* _dest)
 		perror(_dest);
 		return;
 	}
+
+	struct stat _sbuff;
+	fstat(_dFd,&_sbuff);
+	if (S_ISREG(_sbuff.st_mode)==0)
+	{	
+		printf("error: path is not a file\n");
+		return ;
+	}
+
 	//open source file & get cntent
 	int _sFd = open(_source,O_RDONLY);
 	off_t _sSize = lseek(_sFd,0,SEEK_END);

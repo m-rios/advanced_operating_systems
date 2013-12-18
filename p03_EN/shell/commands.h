@@ -15,7 +15,7 @@
 
 
 char* mypwd();
-char* myls(char* dir,char* arg);
+char* myls(char* dir,int _d_mod);
 void mymkdir(char* dir);
 void myrmdir(char* dir);
 void mycd(char* path);
