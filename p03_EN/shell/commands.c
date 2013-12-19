@@ -6,9 +6,9 @@ char* mypwd()
 	getcwd(_return,MAXPATHLEN);
 	return _return;
 }
-char* myls(char* dir,int _d_mod)
+
+void myls(char* dir,int _d_mod)
 {
-	char* _ls = "";
 	char* _wd;
 	DIR* _dirp;
 	struct dirent* _entry;
@@ -25,18 +25,13 @@ char* myls(char* dir,int _d_mod)
 	{
 		while((_entry = readdir(_dirp)) != NULL)
 		{
-			
+
 		}
 	}
-	else 
+	else //simple mode
 	{
 		while((_entry = readdir(_dirp)) != NULL)
-		{
-			if (_entry->d_name[0] != '.')
-			{
-				//add somehow d_name to _ls
-			}
-		}
+			printf("%s\n",_entry->d_name);
 	}
 
 	free(_wd);
@@ -59,21 +54,24 @@ void mycd(char* path)
 	if (chdir(path))
 		perror(path);
 }
-char* mycat(char* _path)
+void mycat(char* _path)
 {
 	//open file
 	int _fd = open(_path,O_RDONLY);
 	if (_fd == -1)
 	{
 		perror(_path);
-		return "";
+		return;
 	}
 
 	//test if is a regular file
 	struct stat _sbuff;
 	fstat(_fd,&_sbuff);
 	if (S_ISREG(_sbuff.st_mode)==0)
-		return "error: path is not a file";
+	{
+		printf("error: path is not a file\n");
+		return;
+	}	
 
 	//size of the file to read
 	char* _file = "";
@@ -84,20 +82,21 @@ char* mycat(char* _path)
 	if (close(_fd)!=0)
 		perror("Problem closing file");
 
-	return _file;
+	printf("%s\n",_file );
+	munmap(_file,_fileSize);
 }
 void mycp(char* _source, char* _dest)
 {
 	//create new file
-	int _dFd = open(_dest,O_CREAT|O_WRONLY,0644);
-	if (_dFd == -1)
+	int _sourceFd = open(_dest,O_CREAT|O_WRONLY,0644);
+	if (_sourceFd == -1)
 	{
 		perror(_dest);
 		return;
 	}
 
 	struct stat _sbuff;
-	fstat(_dFd,&_sbuff);
+	fstat(_sourceFd,&_sbuff);
 	if (S_ISREG(_sbuff.st_mode)==0)
 	{	
 		printf("error: path is not a file\n");
@@ -105,17 +104,15 @@ void mycp(char* _source, char* _dest)
 	}
 
 	//open source file & get cntent
-	int _sFd = open(_source,O_RDONLY);
-	off_t _sSize = lseek(_sFd,0,SEEK_END);
-	lseek(_sFd,0,SEEK_SET); //return pointer to beginning
-	char* _content= (char*) malloc(_sSize);
-	read(_sFd,_content,_sSize);
-	//write on destination & close files
-	write(_dFd,_content,_sSize);
-	free(_content);
-	if (close(_sFd) != 0)
+	int _destFd = open(_source,O_RDONLY);
+	char _buffer[MAXREAD];
+	size_t _rSize;
+	while((_rSize = read(_sourceFd,_buffer,sizeof(_buffer))) > 0)
+		write(_destFd,_buffer,_rSize);
+
+	if (close(_sourceFd) != 0)
 		perror(_source);
-	if (close(_dFd) != 0)
+	if (close(_destFd) != 0)
 		perror(_dest);
 }
 void myrm(char* file)

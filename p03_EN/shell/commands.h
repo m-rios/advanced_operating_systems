@@ -13,13 +13,13 @@
 #include <sys/param.h>
 
 
-
+#define MAXREAD 512
 char* mypwd();
-char* myls(char* dir,int _d_mod);
+void myls(char* dir,int _d_mod);
 void mymkdir(char* dir);
 void myrmdir(char* dir);
 void mycd(char* path);
-char* mycat(char* _path);
+void mycat(char* _path);
 void mycp(char* source, char* _dest);
 void myrm(char* file);
 

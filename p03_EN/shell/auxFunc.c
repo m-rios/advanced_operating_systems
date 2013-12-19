@@ -16,7 +16,7 @@ int callInternal(command* C, char* homeDir)
 	else if (strcmp(C->argv[0],"mycat") == 0)
 	{
 		if (C->argc == 2)
-			printf("%s\n",mycat(C->argv[1]));
+			mycat(C->argv[1]);
 		else if (C->argc == 1)
 			printf("Argument missing\n");
 		else if (C->argc > 2)
@@ -70,6 +70,17 @@ int callInternal(command* C, char* homeDir)
 			mycd(C->argv[1]);
 		else
 			mycd(homeDir);
+	}
+	else if (strcmp(C->argv[0],"myls") == 0)
+	{
+		if (C->argc == 1)
+			myls(NULL,0);
+		else if (C->argc == 2)
+			myls(C->argv[1],0);
+		else if (strcmp(C->argv[2],"-l") == 0)
+			myls(C->argv[1],1);
+		else
+			printf("Incorrect usage of myls\n");
 	}
 	else
 		printf("command not found: %s\n",C->argv[0]);
