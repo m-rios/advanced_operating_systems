@@ -76,11 +76,26 @@ int callInternal(command* C, char* homeDir)
 		if (C->argc == 1)
 			myls(NULL,0);
 		else if (C->argc == 2)
-			myls(C->argv[1],0);
-		else if (strcmp(C->argv[2],"-l") == 0)
-			myls(C->argv[1],1);
+			if (strcmp(C->argv[1],"-l") == 0)
+				myls(NULL,1);
+			else
+				myls(C->argv[1],0);
+		else if (C->argc == 3)
+			if (strcmp(C->argv[1],"-l") == 0)
+				myls(C->argv[3],1);
+			else
+			printf("Incorrect usage of myls\n");
 		else
 			printf("Incorrect usage of myls\n");
+	}
+	else if (strcmp(C->argv[0],"myrm") == 0)
+	{
+		if (C->argc == 2)
+			myrm(C->argv[1]);
+		else if (C->argc == 1)
+			printf("missing argument\n");
+		else
+			printf("Incorrect usage of myrm\n");
 	}
 	else
 		printf("command not found: %s\n",C->argv[0]);

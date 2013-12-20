@@ -18,23 +18,31 @@ void myls(char* dir,int _d_mod)
 	else
 		_wd = dir;
 
+	printf("%s\n", _wd);
+
 	if ((_dirp = opendir(_wd)) == NULL) //something goes wrong
 		perror(_wd);
 
 	if (_d_mod) //detailed mode
 	{
+		struct stat _fileStat;
+		char* path = "\0";
 		while((_entry = readdir(_dirp)) != NULL)
 		{
+			//printf("%s\n", _wd);
+			strcpy(path,_wd);
 
+			strcat(path,_entry->d_name);
+			stat(path,&_fileStat);
+			printf("%lld\n",_fileStat.st_size );
 		}
 	}
 	else //simple mode
-	{
 		while((_entry = readdir(_dirp)) != NULL)
 			printf("%s\n",_entry->d_name);
-	}
 
-	free(_wd);
+	if (dir == NULL)
+		free(_wd);
 
 	if (closedir(_dirp) != 0) //something goes wrong
 		perror("error when closing directory");
@@ -88,13 +96,19 @@ void mycat(char* _path)
 void mycp(char* _source, char* _dest)
 {
 	//create new file
-	int _sourceFd = open(_dest,O_CREAT|O_WRONLY,0644);
-	if (_sourceFd == -1)
+	int _destFd = open(_dest,O_CREAT|O_WRONLY,0644);
+	if (_destFd == -1)
 	{
 		perror(_dest);
 		return;
 	}
-
+	//open source file
+	int _sourceFd = open(_source,O_RDONLY);
+	if (_sourceFd == -1)
+	{
+		perror(_source);
+		return;
+	}
 	struct stat _sbuff;
 	fstat(_sourceFd,&_sbuff);
 	if (S_ISREG(_sbuff.st_mode)==0)
@@ -102,9 +116,7 @@ void mycp(char* _source, char* _dest)
 		printf("error: path is not a file\n");
 		return ;
 	}
-
-	//open source file & get cntent
-	int _destFd = open(_source,O_RDONLY);
+	//copy	
 	char _buffer[MAXREAD];
 	size_t _rSize;
 	while((_rSize = read(_sourceFd,_buffer,sizeof(_buffer))) > 0)
