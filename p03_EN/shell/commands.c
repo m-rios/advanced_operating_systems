@@ -18,23 +18,25 @@ void myls(char* dir,int _d_mod)
 	else
 		_wd = dir;
 
-	printf("%s\n", _wd);
-
 	if ((_dirp = opendir(_wd)) == NULL) //something goes wrong
+	{	
 		perror(_wd);
-
+		return;
+	}
 	if (_d_mod) //detailed mode
 	{
 		struct stat _fileStat;
-		char* path = "\0";
+		char* path = (char*) malloc(MAXPATHLEN); 
 		while((_entry = readdir(_dirp)) != NULL)
 		{
-			//printf("%s\n", _wd);
 			strcpy(path,_wd);
-
+			strcat(path,"/");
 			strcat(path,_entry->d_name);
 			stat(path,&_fileStat);
-			printf("%lld\n",_fileStat.st_size );
+			printf("%us %s %s %lld\t\t %s\n",
+				_fileStat.st_mode,getpwuid(_fileStat.st_uid)->pw_name,
+				getpwuid(_fileStat.st_uid)->pw_name,_fileStat.st_size,
+				_entry->d_name);
 		}
 	}
 	else //simple mode

@@ -11,7 +11,8 @@
 #include <sys/mman.h>
 #include <stdlib.h>
 #include <sys/param.h>
-
+#include <pwd.h>
+#include <uuid/uuid.h>
 
 #define MAXREAD 512
 char* mypwd();

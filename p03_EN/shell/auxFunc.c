@@ -82,7 +82,7 @@ int callInternal(command* C, char* homeDir)
 				myls(C->argv[1],0);
 		else if (C->argc == 3)
 			if (strcmp(C->argv[1],"-l") == 0)
-				myls(C->argv[3],1);
+				myls(C->argv[2],1);
 			else
 			printf("Incorrect usage of myls\n");
 		else
