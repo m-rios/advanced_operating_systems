@@ -35,7 +35,7 @@ void myls(char* dir,int _d_mod)
 			stat(path,&_fileStat);
 			printf("%us %s %s %lld\t\t %s\n",
 				_fileStat.st_mode,getpwuid(_fileStat.st_uid)->pw_name,
-				getpwuid(_fileStat.st_uid)->pw_name,_fileStat.st_size,
+				getpwuid(_fileStat.st_uid)->pw_name,(long long)_fileStat.st_size,
 				_entry->d_name);
 		}
 	}
