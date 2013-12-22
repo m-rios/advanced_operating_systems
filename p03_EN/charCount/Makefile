@@ -13,9 +13,6 @@ readchar_R.o: readchar_R.c
 count_M.o: count_M.c
 	gcc -c -Wall count_M.c -o count_M.o
 
-test: test.c readchar_R.o count_M.o
-	gcc -Wall test.c readchar_R.o count_M.o -o test
-
 clean:
 	rm -f *.o
 	rm -f test
