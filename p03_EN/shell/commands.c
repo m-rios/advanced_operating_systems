@@ -33,9 +33,9 @@ void myls(char* dir,int _d_mod)
 			strcat(path,"/");
 			strcat(path,_entry->d_name);
 			stat(path,&_fileStat);
-			printf("%us %s %s %lld\t\t %s\n",
+			printf("%us %s %s %10lld %s\n",
 				_fileStat.st_mode,getpwuid(_fileStat.st_uid)->pw_name,
-				getpwuid(_fileStat.st_uid)->pw_name,(long long)_fileStat.st_size,
+				getgrgid(_fileStat.st_gid)->gr_name,(long long)_fileStat.st_size,
 				_entry->d_name);
 		}
 	}
@@ -79,21 +79,27 @@ void mycat(char* _path)
 	fstat(_fd,&_sbuff);
 	if (S_ISREG(_sbuff.st_mode)==0)
 	{
-		printf("error: path is not a file\n");
+		printf("error: path is not a regular file\n");
 		return;
 	}	
 
 	//size of the file to read
 	char* _file = "";
-	int _fileSize = lseek(_fd,0,SEEK_END);
-	if (_fileSize != 0)
-		_file = (char*) mmap(NULL,_fileSize,PROT_READ,MAP_PRIVATE,_fd,0);
+	off_t _fileSize = lseek(_fd,0,SEEK_END);
+	off_t _offset = lseek(_fd,0,SEEK_SET);
+	long _pageSize = sysconf(_SC_PAGE_SIZE);
+	printf("size: %lld\n",_fileSize );
+	while(_offset<_fileSize)
+	{
+		_file = (char*) mmap(NULL,_pageSize,PROT_READ,MAP_SHARED,_fd,_offset);
+		printf("%s", _file);		
+		munmap(_file,_pageSize);
+		_offset = lseek(_fd,_pageSize,SEEK_CUR);
+	}
 
 	if (close(_fd)!=0)
 		perror("Problem closing file");
 
-	printf("%s\n",_file );
-	munmap(_file,_fileSize);
 }
 void mycp(char* _source, char* _dest)
 {

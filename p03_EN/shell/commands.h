@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <sys/param.h>
 #include <pwd.h>
+#include "grp.h"
 
 #define MAXREAD 512
 char* mypwd();
