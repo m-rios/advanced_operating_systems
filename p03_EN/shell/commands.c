@@ -27,15 +27,20 @@ void myls(char* dir,int _d_mod)
 	{
 		struct stat _fileStat;
 		char* path = (char*) malloc(MAXPATHLEN); 
+		struct tm* _filetime;
 		while((_entry = readdir(_dirp)) != NULL)
 		{
 			strcpy(path,_wd);
 			strcat(path,"/");
 			strcat(path,_entry->d_name);
 			stat(path,&_fileStat);
-			printf("%us %s %s %10lld %s\n",
-				_fileStat.st_mode,getpwuid(_fileStat.st_uid)->pw_name,
-				getgrgid(_fileStat.st_gid)->gr_name,(long long)_fileStat.st_size,
+			_filetime = localtime(&_fileStat.st_mtimespec.tv_sec);
+			printf("%us %s %s %lld %s %s\n",
+				_fileStat.st_mode,
+				getpwuid(_fileStat.st_uid)->pw_name,
+				getgrgid(_fileStat.st_gid)->gr_name,
+				(long long)_fileStat.st_size,
+				asctime(_filetime),
 				_entry->d_name);
 		}
 	}

@@ -2,6 +2,7 @@
 #include "parser.h"
 #include "auxFunc.h"
 #include <sys/param.h>
+#include "commands.h"
 
 
 int main(int argc, char const *argv[])
@@ -9,7 +10,7 @@ int main(int argc, char const *argv[])
 	command C;
 	int r;
 	int _exit;
-	char* homeDir = NULL; //get current directory
+	char* homeDir = mypwd(); //get current directory
 
 	do
 	{

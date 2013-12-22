@@ -13,6 +13,7 @@
 #include <sys/param.h>
 #include <pwd.h>
 #include "grp.h"
+#include "time.h"
 
 #define MAXREAD 512
 char* mypwd();
