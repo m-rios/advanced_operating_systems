@@ -34,7 +34,7 @@ void myls(char* dir,int _d_mod)
 			strcat(path,"/");
 			strcat(path,_entry->d_name);
 			stat(path,&_fileStat);
-			_filetime = localtime(&_fileStat.st_mtimespec.tv_sec);
+			_filetime = localtime(&_fileStat.st_mtime);
 			printf("%us %s %s %lld %s %s\n",
 				_fileStat.st_mode,
 				getpwuid(_fileStat.st_uid)->pw_name,
@@ -93,7 +93,6 @@ void mycat(char* _path)
 	off_t _fileSize = lseek(_fd,0,SEEK_END);
 	off_t _offset = lseek(_fd,0,SEEK_SET);
 	long _pageSize = sysconf(_SC_PAGE_SIZE);
-	printf("size: %lld\n",_fileSize );
 	while(_offset<_fileSize)
 	{
 		_file = (char*) mmap(NULL,_pageSize,PROT_READ,MAP_SHARED,_fd,_offset);
