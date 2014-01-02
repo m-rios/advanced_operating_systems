@@ -1,4 +1,4 @@
-int io(int readend, int writeend)
+int io(int readend, int writeend1, int writeend2)
 {
 	int r;
 	char buff[SIZE];

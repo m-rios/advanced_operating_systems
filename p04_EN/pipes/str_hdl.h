@@ -1,5 +1,5 @@
-#ifndef SYMBOL
-#define SYMBOL value
+#ifndef STR_HDL_H
+#define STR_HDL_H
 #define SIZE 100
 #define SIZE_HALF ((SIZE)/2 +1)
 
