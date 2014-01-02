@@ -13,7 +13,7 @@ int caps(int readend, int writeend)
 			break;					//something went wrong
 		else if (r == 0)			//pipe closed
 		{
-			close(writeend);		//closed other one
+			close(writeend);		//close other one
 			return 0;
 		}							//some letters to capitals
 

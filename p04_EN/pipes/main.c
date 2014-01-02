@@ -1,4 +1,4 @@
-int main()
+int main() //original main
 {
 	int forth[2], back[2], r;
 
@@ -21,4 +21,59 @@ int main()
 					wait(NULL);
 					return r;
 	}
+}
+
+int main() //my main
+{
+	int pipe1[2], pipe2[2], pipe3[2], pipe4[2], pipe5[2], pipe6[2], r, pid;
+
+	if (pipe(pipe1) || pipe(pipe2) || pipe(pipe2) ||
+		pipe(pipe4) || pipe(pipe5) || pipe(pipe6) )
+	{
+		perror("pipe");
+		return -1;
+	}
+
+	if ((pid = fork()) == -1)
+	{
+		perror("fork I/O");
+		return -2;
+	}
+	else if (pid = 0) //I/O process
+	{
+		//call i/o
+	}
+	else if ((pid = fork()) == -1)
+	{
+		perror("fork Tx_B1");
+		return -2;
+	}
+	else if (pid == 0) //Tx_B1;
+	{
+		int pidaux, ret;
+		if ((pidaux = fork()) == -1)
+		{
+			perror("fork Tx_B2");
+			return -2;
+		}
+		else if (pidaux = 0) //Tx_B2
+		{
+			
+		}
+		//call caps
+		wait(NULL); //wait for Tx_B2
+		return ret;
+	}else if ((pid = fork()) == -1)
+	{
+		perror("fork Tx_A");
+		return -2;
+	}else if (pid == 0)
+	{
+		//call caps
+	}
+	wait(NULL);		//wait for both
+	wait(NULL);		//Tx_A & Tx_B1
+	//call demux proc
+	wait(NULL); //wait for I/O
+
 }
