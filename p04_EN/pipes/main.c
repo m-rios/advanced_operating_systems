@@ -63,9 +63,10 @@ int main() //my main
 		else if (pidaux == 0) //Tx_B2
 		{
 			printf("Tx_B2\n");
+			caps(pipe3[0], pipe5[1]);
 			return 0;
 		}
-		//call caps
+		caps(pipe1[0], pipe3[1]);
 		wait(NULL); //wait for Tx_B2
 		return ret;
 	}else if ((pid = fork()) == -1)
@@ -75,6 +76,7 @@ int main() //my main
 	}else if (pid == 0)
 	{
 		//call caps
+		caps(pipe2[0], pipe4[1]);
 		printf("Tx_A\n");
 		return 0;
 	}
@@ -82,6 +84,8 @@ int main() //my main
 	wait(NULL);		//Tx_A & Tx_B1
 	printf("demux\n");
 	//call demux proc
+	if (demux(pipe5[0], pipe4[0], pipe6[1]) < 0)
+		return -1;
 	wait(NULL); //wait for I/O
 	printf("io kill\n");
 
