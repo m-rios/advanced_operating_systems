@@ -45,6 +45,15 @@ int main() //my main
 	}
 	else if (pid == 0) //I/O process
 	{
+		close(pipe1[0]);
+		close(pipe2[0]);
+		close(pipe3[0]);
+		close(pipe3[1]);
+		close(pipe4[0]);
+		close(pipe4[1]);
+		close(pipe5[0]);
+		close(pipe5[1]);
+		close(pipe6[1]);
 		printf("I/O\n");
 		return io(pipe6[0], pipe1[1], pipe2[1]);
 	}
@@ -55,6 +64,17 @@ int main() //my main
 	}
 	else if (pid == 0) //Tx_B1;
 	{
+		close(pipe1[1]);
+		close(pipe2[0]);
+		close(pipe2[1]);
+		close(pipe3[0]);
+		close(pipe4[0]);
+		close(pipe4[1]);
+		close(pipe5[0]);
+		close(pipe5[1]);
+		close(pipe6[0]);
+		close(pipe6[1]);
+		
 		int pidaux, ret;
 		printf("Tx_B1\n");
 		if ((pidaux = fork()) == -1)
@@ -64,11 +84,22 @@ int main() //my main
 		}
 		else if (pidaux == 0) //Tx_B2
 		{
+			close(pipe1[0]);
+			close(pipe1[1]);
+			close(pipe2[0]);
+			close(pipe2[1]);
+			close(pipe3[1]);
+			close(pipe4[0]);
+			close(pipe4[1]);
+			close(pipe5[0]);
+			close(pipe6[0]);
+			close(pipe6[1]);
 			printf("Tx_B2\n");
 			caps(pipe3[0], pipe5[1]);
 			return 0;
 		}
 		ret = caps(pipe1[0], pipe3[1]);
+		printf("fin Tx_B1 & 2\n");
 		wait(NULL); //wait for Tx_B2
 		return ret;
 	}else if ((pid = fork()) == -1)
@@ -77,11 +108,29 @@ int main() //my main
 		return -2;
 	}else if (pid == 0)
 	{
+		close(pipe1[0]);
+		close(pipe1[1]);
+		close(pipe2[1]);
+		close(pipe3[0]);
+		close(pipe3[1]);
+		close(pipe4[0]);
+		close(pipe5[0]);
+		close(pipe5[1]);
+		close(pipe6[0]);
+		close(pipe6[1]);
 		//call caps
 		caps(pipe2[0], pipe4[1]);
 		printf("Tx_A\n");
 		return 0;
 	}
+	close(pipe1[0]);
+	close(pipe1[1]);
+	close(pipe2[0]);
+	close(pipe2[1]);
+	close(pipe3[1]);
+	close(pipe4[1]);
+	close(pipe6[0]);
+	
 	wait(NULL);		//wait for both
 	wait(NULL);		//Tx_A & Tx_B1
 	printf("demux\n");
