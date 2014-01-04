@@ -15,3 +15,7 @@ cap_trans.o: cap_trans.c cap_trans.h
 
 str_hdl.o: str_hdl.c str_hdl.h
 	gcc -Wall -c str_hdl.c -o str_hdl.o
+
+clean:
+	rm -f p4
+	rm -f *.o
