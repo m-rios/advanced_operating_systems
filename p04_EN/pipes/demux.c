@@ -1,3 +1,4 @@
+#include "demux.h"
 int demux(int readend1, int readend2, int writeend)
 {
 	int r1,r2;

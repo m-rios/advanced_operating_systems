@@ -1,3 +1,4 @@
+#include "cap_trans.h"
 int caps(int readend, int writeend)
 {
 	int i, r;

@@ -1,4 +1,7 @@
 #include "main.h"
+#include "cap_trans.h"
+#include "demux.h"
+#include "io_mux.h"
 /*int main() //original main
 {
 	int forth[2], back[2], r;
@@ -43,8 +46,7 @@ int main() //my main
 	else if (pid == 0) //I/O process
 	{
 		printf("I/O\n");
-		sleep(2);
-		return 0;
+		return io(pipe6[0], pipe1[1], pipe2[1]);
 	}
 	else if ((pid = fork()) == -1)
 	{
@@ -66,7 +68,7 @@ int main() //my main
 			caps(pipe3[0], pipe5[1]);
 			return 0;
 		}
-		caps(pipe1[0], pipe3[1]);
+		ret = caps(pipe1[0], pipe3[1]);
 		wait(NULL); //wait for Tx_B2
 		return ret;
 	}else if ((pid = fork()) == -1)
@@ -88,5 +90,5 @@ int main() //my main
 		return -1;
 	wait(NULL); //wait for I/O
 	printf("io kill\n");
-
+	return 0;
 }

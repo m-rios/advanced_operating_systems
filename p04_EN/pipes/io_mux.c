@@ -1,7 +1,8 @@
+#include "io_mux.h"
 int io(int readend, int writeend1, int writeend2)
 {
 	int r;
-	char buff[SIZE];
+	char buff[SIZE], half1[SIZE_HALF], half2[SIZE_HALF];
 
 	printf("Type lines of text (Ctrl+D to finish):\n");
 
@@ -9,18 +10,35 @@ int io(int readend, int writeend1, int writeend2)
 	{
 		if (fgets(buff,SIZE, stdin)) //Read from keyboard
 		{
-			if (write(writeend, buff, 1+strlen(buff)) < 0)
-				break; 				//if error exit
-		}
-		else						//if eof close pipe
-			close(writeend);
+			split(buff,half1,half2);
+			printf("llega1\n");
 
+			if ((write(writeend1, half1, 1+strlen(half1)) < 0)
+				|| (write(writeend2, half2, 1+strlen(half2)) < 0))
+				break; 				//if error exit
+
+		}
+		else
+		{						//if eof close pipe
+			close(writeend1);
+			close(writeend2);
+		}
+
+		printf("llega2\n");
 		r = read(readend, buff, SIZE);
 
 		if (r < 0)					//something wrong
 			break;
-		else if (r == 0)
-			return 0; 				//everything ok
+		else if (r == 0)			//pipe closed
+		{
+			close(readend);			//close other end
+			return 0;
+		}
+		else						//something to read
+		{
+			printf("Transformed string: %s\n", buff);
+		}
+
 	}
 									//something has gone wrong
 	perror("io");
