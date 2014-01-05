@@ -45,7 +45,10 @@ int main() //my main
 	}
 	else if (pid == 0) //I/O process
 	{
-		printf("I/O\n");
+		printf("I/O: %d\n", getpid());
+		close(pipe6[1]);
+		close(pipe1[0]);
+		close(pipe2[0]);
 		return io(pipe6[0], pipe1[1], pipe2[1]);
 	}
 	else if ((pid = fork()) == -1)
@@ -57,7 +60,7 @@ int main() //my main
 	{
 		
 		int pidaux, ret;
-		printf("Tx_B1\n");
+		printf("Tx_B1: %d\n", getpid());
 		if ((pidaux = fork()) == -1)
 		{
 			perror("fork Tx_B2");
@@ -65,12 +68,17 @@ int main() //my main
 		}
 		else if (pidaux == 0) //Tx_B2
 		{
-			printf("Tx_B2\n");
+			//close(pipe3[1]);
+			close(pipe5[0]);
+			printf("Tx_B2: %d\n", getpid());
 			caps(pipe3[0], pipe5[1]);
 			return 0;
 		}
+		//close(pipe1[1]);
+		//close(pipe3[0]);
 		ret = caps(pipe1[0], pipe3[1]);
-		printf("fin Tx_B1 & 2\n");
+		//close(pipe1[0]);
+		//close(pipe3[1]);
 		wait(NULL); //wait for Tx_B2
 		return ret;
 	}else if ((pid = fork()) == -1)
@@ -80,9 +88,9 @@ int main() //my main
 	}else if (pid == 0)
 	{
 		//call caps
-		caps(pipe2[0], pipe4[1]);
-		printf("Tx_A\n");
-		return 0;
+		//close(pipe2[1]); close(pipe4[0]);
+		printf("Tx_A: %d\n", getpid());		
+		return caps(pipe2[0], pipe4[1]);
 	}
 
 	wait(NULL);		//wait for both

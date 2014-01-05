@@ -11,7 +11,6 @@ int io(int readend, int writeend1, int writeend2)
 		if (fgets(buff,SIZE, stdin)) //Read from keyboard
 		{
 			split(buff,half1,half2);
-			printf("llega1\n");
 
 			if ((write(writeend1, half1, 1+strlen(half1)) < 0)
 				|| (write(writeend2, half2, 1+strlen(half2)) < 0))
@@ -24,21 +23,21 @@ int io(int readend, int writeend1, int writeend2)
 			close(writeend2);
 		}
 
-		printf("llega2\n");
 		r = read(readend, buff, SIZE);
 
 		if (r < 0)					//something wrong
 			break;
 		else if (r == 0)			//pipe closed
 		{
-			close(readend);			//close other end
+			//close(readend);			//close other end
 			return 0;
 		}
-		else						//something to read
-		{
-			printf("Transformed string: %s\n", buff);
-		}
-
+		//else						//something to read
+		//{
+		//	printf("Transformed string: %s\n", buff);
+		//}
+		//return 0;
+		fputs(buff, stdout);
 	}
 									//something has gone wrong
 	perror("io");

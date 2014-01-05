@@ -24,6 +24,7 @@ int demux(int readend1, int readend2, int writeend)
 			return 0;
 		}
 
+		printf("Data at demux:\nfrom Tx_B2: %s\nfrom Tx_A : %s\n", buff1, buff2);
 		concatenate(all,buff1,buff2);
 
 		if (write(writeend, all, 1+strlen(all)) < 0)
