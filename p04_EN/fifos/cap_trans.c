@@ -45,7 +45,6 @@ int main(int argc, char const *argv[])
 	const char* input = argv[1];
 	const char* output = argv[2];
 
-	printf("tx abriendo %s\n", input);
 	int Fin = open(input, O_RDONLY);
 	int Fout = open(output, O_WRONLY);
 

@@ -46,9 +46,7 @@ int main(int argc, char const *argv[])
 	const char* inputA = argv[1];
 	const char* inputB = argv[2];
 
-	printf("abriendo %s\n", inputA);
 	int FinputA = open(inputA, O_RDONLY);
-	printf("abeirto\n");
 	int FinputB = open(inputB, O_RDONLY);
 	int Fout = open(output, O_WRONLY);
 

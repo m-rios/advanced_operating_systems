@@ -49,9 +49,7 @@ int main(int argc, char const *argv[])
 	const char* outputA = argv[2];
 	const char* outputB = argv[3];
 
-	printf("EMPIEZA CABRON %s\n", outputA);
 	int FoutA = open(outputA, O_WRONLY);
-	printf("LLEGA\n");
 	int FoutB = open(outputB, O_WRONLY);
 	int Fin = open(input, O_RDONLY);
 
