@@ -13,55 +13,68 @@ int main()
 		return -1;
 	}
 
-	int pid;
-
 	if (fork() == 0) //IOdemux process
 	{
 		close(back[1]);
 		close(capsA[0]);
 		close(capsB1[0]);
+		close(capsB2[0]); close(capsB2[1]);
+		close(demuxB[0]); close(demuxB[1]);
+		close(demuxA[0]); close(demuxA[1]);
 		return io(back[0], capsB1[1], capsA[1]);
 	}
 
 	//back to parent
 	if (fork() == 0) //Tx_B1
 	{
-		printf("Tx_B1 %d\n", getpid());
 		close(capsB1[1]);
 		close(capsB2[0]);
+		close(capsA[0]); close(capsA[1]);
+		close(back[0]); close(back[1]);
+		close(demuxA[0]); close(demuxA[1]);
+		close(demuxB[0]); close(demuxB[1]);
 		r = caps(capsB1[0], capsB2[1]);
-		printf("POLLA\n");
 		return r;
 	}
+	close(capsB1[1]);
+	close(capsA[1]);
+	close(back[0]);
 
 	if (fork() == 0)//Tx_B2
 	{
-		printf("Tx_B2 %d\n", getpid());
 		close(demuxB[0]);
 		close(capsB2[1]);
+		close(capsA[0]); close(capsA[1]);
+		close(capsB1[0]); close(capsB1[1]);
+		close(back[0]); close(back[1]);
+		close(demuxA[0]); close(demuxA[1]);
 		return caps(capsB2[0],demuxB[1]);
 	}
+	close(capsB1[0]);
+	close(capsB2[1]);
+	close(demuxB[1]);
 
 	if (fork() == 0) //Tx_A
 	{
-		printf("Tx_A %d\n", getpid());
+		close(capsB1[0]); close(capsB1[1]);
+		close(capsB2[0]); close(capsB2[1]);
+		close(back[0]); close(back[1]);
+		close(demuxB[0]); close(demuxB[1]);
 		close(capsA[1]);
 		close(demuxA[0]);
 		return caps(capsA[0], demuxA[1]);
 	}
-
-	//wait(NULL);
-	printf("RABO\n");
-	//wait(NULL);
-	printf("VERGA\n");
-
-	close(demuxB[1]);
+	close(capsA[0]);
 	close(demuxA[1]);
-	close(back[0]);
+
+
 	r = demux(demuxB[0], demuxA[0], back[1]);
 
 	//wait(NULL);
-	printf("Me vas a comer toda la PULA TAL CUAL\n");
+	//wait(NULL);
+	wait(NULL);
+	wait(NULL);
+
 
 	return 0;
 }

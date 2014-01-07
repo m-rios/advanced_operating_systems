@@ -1,8 +1,8 @@
-p4: cap_trans.o demux.o io_mux.o main.o str_hdl.o
-	gcc -Wall cap_trans.o demux.o io_mux.o main.o str_hdl.o -o p4
-
-main.o: main.c main.h
-	gcc -Wall -c main.c -o main.o
+all: cap_trans.o demux.o io_mux.o str_hdl.o
+	gcc -Wall cap_trans.o -o tx
+	gcc -Wall io_mux.o str_hdl.o -o io_mux
+	gcc -Wall demux.o str_hdl.o -o demux
+	echo "project has been built, to create fifos type make fifo"
 
 io_mux.o: io_mux.c io_mux.h
 	gcc -Wall -c io_mux.c -o io_mux.o
@@ -17,6 +17,9 @@ str_hdl.o: str_hdl.c str_hdl.h
 	gcc -Wall -c str_hdl.c -o str_hdl.o
 
 clean:
-	rm -f p4
 	rm -f *.o
-	rm -f pene
+	rm -f tx
+	rm -f io_mux
+	rm -f demux
+
+fifo:

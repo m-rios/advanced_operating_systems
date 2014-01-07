@@ -36,3 +36,30 @@ int io(int readend, int writeend1, int writeend2)
 	perror("io");
 	return -1;
 }
+
+int main(int argc, char const *argv[])
+{
+	if (argc < 3 || argc > 4)
+	{
+		printf("wrong number of parameters\n");
+		return -1;
+	}
+
+	const char* input = argv[1];
+	const char* outputA = argv[2];
+	const char* outputB = argv[3];
+
+	printf("EMPIEZA CABRON %s\n", outputA);
+	int FoutA = open(outputA, O_WRONLY);
+	printf("LLEGA\n");
+	int FoutB = open(outputB, O_WRONLY);
+	int Fin = open(input, O_RDONLY);
+
+	if (FoutA == -1 || FoutB == -1 || Fin == -1)
+	{
+		perror("pipe doesn't exist");
+		return -1;
+	}
+
+	return io(Fin, FoutA, FoutB);
+}

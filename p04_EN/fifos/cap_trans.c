@@ -19,8 +19,6 @@ int caps(int readend, int writeend)
 			return 0;
 		}							//some letters to capitals
 
-		printf("Data of %d: %s\n", getpid(),buff);
-
 		for (i=0; buff[i]; i++)
 			if (rand() > RAND_MAX/2)
 				if (buff[i] >= 'a' && buff[i] <= 'z')
@@ -34,4 +32,28 @@ int caps(int readend, int writeend)
 	}
 	perror("caps");
 	return -1;
+}
+
+int main(int argc, char const *argv[])
+{
+	if (argc < 2 || argc > 3)
+	{
+		printf("wrong number of parameters\n");
+		return -1;
+	}
+
+	const char* input = argv[1];
+	const char* output = argv[2];
+
+	printf("tx abriendo %s\n", input);
+	int Fin = open(input, O_RDONLY);
+	int Fout = open(output, O_WRONLY);
+
+	if (Fin == -1 || Fout == -1)
+	{
+		perror("pipe doesn't exist");
+		return -1;
+	}
+
+	return caps(Fin, Fout);
 }
