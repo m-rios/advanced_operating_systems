@@ -19,8 +19,6 @@ int caps(int readend, int writeend)
 			return 0;
 		}							//some letters to capitals
 
-		printf("Data of %d: %s\n", getpid(),buff);
-
 		for (i=0; buff[i]; i++)
 			if (rand() > RAND_MAX/2)
 				if (buff[i] >= 'a' && buff[i] <= 'z')
@@ -30,7 +28,6 @@ int caps(int readend, int writeend)
 		if (write(writeend, buff, 1+strlen(buff)) < 0)
 			break;
 		
-		//return 0;
 	}
 	perror("caps");
 	return -1;
