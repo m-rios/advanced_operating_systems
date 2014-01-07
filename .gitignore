@@ -30,3 +30,9 @@ p03_EN/tosend/MarioRios.tar
 p03_EN/tosend/P3Data.txt
 
 p04_EN/pipes/p4
+
+p04_EN/fifos/demux
+
+p04_EN/fifos/io_mux
+
+p04_EN/fifos/tx
