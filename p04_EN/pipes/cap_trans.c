@@ -6,9 +6,9 @@ int caps(int readend, int writeend)
 
 	srand((unsigned)getpid() ^ (unsigned) time(NULL));
 
-	while(1)
+	for(;;)
 	{
-		printf("i vuelta a empezar %d\n", getpid());
+		//printf("i vuelta a empezar %d\n", getpid());
 		r = read(readend, buff, SIZE);
 
 		printf("R of %d: %d\n", getpid(), r);

@@ -15,28 +15,25 @@ int io(int readend, int writeend1, int writeend2)
 			if ((write(writeend1, half1, 1+strlen(half1)) < 0)
 				|| (write(writeend2, half2, 1+strlen(half2)) < 0))
 				break; 				//if error exit
-
 		}
-		else
-		{						//if eof close pipe
+		else						//if eof close pipe
+		{	
+			printf("io: EOF\n");
 			close(writeend1);
 			close(writeend2);
 		}
-
+		printf("LEYENDO\n");
 		r = read(readend, buff, SIZE);
+		printf("YA HE LEIDO LOCO: %s\n",buff);
 
 		if (r < 0)					//something wrong
 			break;
 		else if (r == 0)			//pipe closed
 		{
-			//close(readend);			//close other end
+			printf("io: r == 0\n");
+			close(readend);			//close other end
 			return 0;
 		}
-		//else						//something to read
-		//{
-		//	printf("Transformed string: %s\n", buff);
-		//}
-		//return 0;
 		fputs(buff, stdout);
 	}
 									//something has gone wrong
