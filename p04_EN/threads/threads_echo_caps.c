@@ -140,6 +140,7 @@ void * caps (void * pv)        // Convert to capital letters
     shared_data * sd = (shared_data *) pv;
     int i;
     char c;
+    static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
     for (;;)
     {
@@ -147,6 +148,8 @@ void * caps (void * pv)        // Convert to capital letters
                                            // gives way to me
         if (sd->end)
             return NULL;
+        
+        pthread_mutex_lock (&mutex);
                                            // Convert some
         for (i=0; sd->buff[i]; i++)        // letters to caps.
             if (tsrandom() > RAND_MAX/2)   // (with prob. 0.5)
@@ -161,6 +164,7 @@ void * caps (void * pv)        // Convert to capital letters
                     sd->buff[i] -= ('a' - 'A');  // Convert
                 }
             }
+        pthread_mutex_unlock (&mutex);    
 
         sem_post (&sd->semaphore_io);       // Give way to I/O
     }
