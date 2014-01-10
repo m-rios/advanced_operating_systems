@@ -1,10 +1,14 @@
+#ifndef DEMUX_H
+#define DEMUX_H value
+
 #include "str_hdl.h"
-#include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
 #include <sys/param.h>
 #include <fcntl.h>
 
-int caps(int readend, int writeend, const char* procname);
+int demux(int readend1, int readend2, int writeend);
+
+#endif
+

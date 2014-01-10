@@ -24,7 +24,7 @@ int caps(int readend, int writeend, const char* procname)
 					buff[i] -= ('a' - 'A');
 									//send back
 
-		printf("\tTx_%s transmitting %lu bytes\n",procname, strlen(buff));
+		printf("\tTx_%s transmitting %d bytes\n",procname, strlen(buff));
 		
 		if (write(writeend, buff, 1+strlen(buff)) < 0)
 			break;

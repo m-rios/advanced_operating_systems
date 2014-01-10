@@ -10,6 +10,8 @@ int io(int readend, int writeend1, int writeend2)
 	{
 		if (fgets(buff,SIZE, stdin)) //Read from keyboard
 		{
+			printf("\tMux: separating %lu bytes\n", strlen(buff));
+
 			split(buff,half1,half2);
 
 			if ((write(writeend1, half1, 1+strlen(half1)) < 0)

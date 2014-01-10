@@ -1,10 +1,13 @@
+#ifndef IO_MUX_H
+#define IO_MUX_H
+
 #include "str_hdl.h"
-#include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
 #include <sys/param.h>
 #include <fcntl.h>
+int io(int readend, int writeend1, int writeend2);
 
-int caps(int readend, int writeend, const char* procname);
+#endif
+

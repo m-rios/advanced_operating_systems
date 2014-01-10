@@ -24,7 +24,7 @@ int demux(int readend1, int readend2, int writeend)
 			return 0;
 		}
 		
-		printf("\tDemux: rejoining %lu + %lu bytes\n", strlen(buff1), strlen(buff2));
+		printf("\tDemux: rejoining %d + %d bytes\n", strlen(buff1), strlen(buff2));
 
 		concatenate(all,buff1,buff2);
 
