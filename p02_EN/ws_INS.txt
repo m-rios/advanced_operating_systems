@@ -1,0 +1,10 @@
+# Parameters:  ./calculate_ws 16 100000 INS RAN 1000
+# Executing command:  ./gen_trace INS RAN 1000
+#
+#          Position        Interval           Pages       Pages/op.
+#
+               0          100000              28        0.000280
+          100000          100000              40        0.000400
+          200000          100000              49        0.000490
+          300000          100000              57        0.000570
+          400000           94485              63        0.000667
